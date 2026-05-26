@@ -19,10 +19,10 @@ stages:
           - script:
               npm install @salesforce/cli --global
               sf --version
-            displayName: Install SF CLI
+            displayName: Install SalesForce CLI 
           - checkout: self
             fetchdepth: 0
-            displayName: checkout to correct commit
+            displayName: checkout to correct commit 
 
         # Authenticate With SF org
       
