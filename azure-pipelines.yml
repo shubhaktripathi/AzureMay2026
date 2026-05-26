@@ -16,3 +16,26 @@ stages:
               echo Add other tasks to build, test, and deploy your project.
               echo See https://aka.ms/yaml
             displayName: 'Run a multi-line script'
+          - script:
+              npm install @salesforce/cli --global
+              sf --version
+            displayName: Install SF CLI
+          - checkout: self
+            fetchdepath: 0
+            displayNAme: checkout to correct commit
+
+        # Authenticate With SF org
+      
+          - script: 
+              echo $(SF_CLIENTID)
+              echo $(SF_LOGINURL)
+              echo $(SF_USERNAME)
+            displayNAme:  Print Variables
+      - task: DownloadSecureFile@1
+        name: securefile
+        inputs:
+        secureFile: 'server.key'
+        displayName: download certificate
+        -script: sf org login jwt --username $(SF_USERNAME) --jwt-key-file $(securefile.sourceFilePath) --client-id $(SF_CLIENTID)  --set-default --alias ci-og --instance-url $(SF_LOGINURL)
+
+
