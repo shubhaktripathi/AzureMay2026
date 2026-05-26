@@ -21,8 +21,8 @@ stages:
               sf --version
             displayName: Install SF CLI
           - checkout: self
-            fetchdepath: 0
-            displayNAme: checkout to correct commit
+            fetchdepth: 0
+            displayName: checkout to correct commit
 
         # Authenticate With SF org
       
