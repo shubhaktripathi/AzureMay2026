@@ -35,7 +35,7 @@ stages:
         name: securefile
         inputs:
         secureFile: 'server.key'
-        displayName: download certificate
+        displayName: download certificate JWT
         -script: sf org login jwt --username $(SF_USERNAME) --jwt-key-file $(securefile.sourceFilePath) --client-id $(SF_CLIENTID)  --set-default --alias ci-og --instance-url $(SF_LOGINURL)
 
 
