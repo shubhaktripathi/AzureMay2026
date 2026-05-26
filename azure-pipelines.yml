@@ -1,3 +1,7 @@
+# Add this at the very top level of your YAML pipeline
+variables:
+  - group: New variable group 26-May
+
 trigger:
   - feature/*
 
