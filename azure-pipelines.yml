@@ -43,5 +43,5 @@ stages:
             inputs:
               secureFile: 'server.key'
 
-          - script: sf org login jwt --username $(SF_USERNAME) --jwt-key-file $(securefile.sourceFilePath) --client-id $(SF_CLIENTID) --set-default --alias ci-org --instance-url $(SF_LOGINURL)
+          - script: sf org login jwt --username $(SF_USERNAME) --jwt-key-file $(securefile.secureFilePath) --client-id $(SF_CLIENTID) --set-default --alias ci-org --instance-url $(SF_LOGINURL)
             displayName: Authenticate to Salesforce
