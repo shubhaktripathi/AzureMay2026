@@ -1,8 +1,19 @@
 variables:
   - group: New variable group 26-May
-
+#trigger when branch starts with feature/* and path given 
 trigger:
+ branches:
+  include:
   - feature/*
+  paths:
+   include:
+   - force-app/*
+#pull request 
+pr: 
+ branches:
+  include:
+  - uat
+  
 
 pool:
   vmImage: 'ubuntu-latest'
