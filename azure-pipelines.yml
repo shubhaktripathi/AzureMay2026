@@ -5,9 +5,6 @@ trigger:
  branches:
   include:
   - feature/*
-  paths:
-   include:
-   - force-app/*
 #pull request 
 pr: 
  branches:
@@ -28,8 +25,3 @@ stages:
     - name: SF_USERNAME
     - name: SF_LOGIN_URL
     - name: SECURE_FILE_NAME
-
-  -  stage: Test
-     jobs:
-     - job: SF Test JOb
-    
