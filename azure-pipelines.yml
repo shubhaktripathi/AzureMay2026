@@ -1,4 +1,3 @@
-# Add this at the very top level of your YAML pipeline
 variables:
   - group: New variable group 26-May
 
@@ -30,7 +29,6 @@ stages:
             fetchDepth: 0
             displayName: checkout to correct commit 
 
-          # Authenticate With SF org
           - script: |
               echo $(SF_CLIENTID)
               echo $(SF_LOGINURL)
@@ -45,3 +43,27 @@ stages:
 
           - script: sf org login jwt --username $(SF_USERNAME) --jwt-key-file $(securefile.secureFilePath) --client-id $(SF_CLIENTID) --set-default --alias ci-org --instance-url $(SF_LOGINURL)
             displayName: Authenticate to Salesforce
+          
+          - script: sf apex run test --target-org ci-org --test-level RunLocalTests --code-coverage --result-format human -d ./ --wait 10
+            displayName: Run the Existing Test Cases
+
+          - task: PythonScript@0
+            inputs:
+              scriptSource: 'filePath'
+              scriptPath: 'CODE_COVERAGE.py'
+            displayName: Run Code Coverage Check
+      
+          - script: |
+              sf plugins install @salesforce/sfdx-scanner
+            displayName: Install SF CLI Scanner
+
+          - script: |
+              mkdir reports
+              sf scanner run --format html --target force-app/main/default/classes --engine pmd,pmd-appexchange --category Design,Best Practices,Code Style,Performance,Security,Documentation,Error Prone --outfile reports/scan-reports.html
+            displayName: Run SF CLI Scan Report 
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Build Artifacts'
+            inputs:
+              pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              artifactName: 'drop'
